@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/AuthSignFragment">
+    <fragment
+        android:id="@+id/AuthSignFragment"
+        android:name="com.example.chatapplication.ui.auth.AuthSignInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_auth_sign_in" >
+
+        <action
+            android:id="@+id/action_signFragment_to_signUpFragment"
+            app:destination="@id/AuthOtpVerificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/AuthOtpVerificationFragment"
+        android:name="com.example.chatapplication.ui.auth.AuthOtpVerificationFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_auth_otp_verification" >
+
+        <action
+            android:id="@+id/action_signUpFragment_to_signFragment"
+            app:destination="@id/AuthSignFragment" />
+    </fragment>
+</navigation>
