@@ -8,20 +8,15 @@
         android:id="@+id/AuthSignFragment"
         android:name="com.example.chatapplication.ui.auth.AuthSignInFragment"
         android:label="fragment_log_in"
-        tools:layout="@layout/fragment_auth_sign_in" >
-
-        <action
-            android:id="@+id/action_signFragment_to_signUpFragment"
-            app:destination="@id/AuthOtpVerificationFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_auth_sign_in" />
     <fragment
         android:id="@+id/AuthOtpVerificationFragment"
         android:name="com.example.chatapplication.ui.auth.AuthOtpVerificationFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_auth_otp_verification" >
-
-        <action
-            android:id="@+id/action_signUpFragment_to_signFragment"
-            app:destination="@id/AuthSignFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_auth_otp_verification" />
+    <fragment
+        android:id="@+id/userNameFragment"
+        android:name="com.example.chatapplication.ui.home.UserNameFragment"
+        android:label="fragment_user_name"
+        tools:layout="@layout/fragment_user_name" />
 </navigation>

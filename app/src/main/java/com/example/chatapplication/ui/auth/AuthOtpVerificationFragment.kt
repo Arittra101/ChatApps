@@ -1,53 +1,117 @@
 package com.example.chatapplication.ui.auth
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.chatapplication.R
+import com.example.chatapplication.data.repository.OtpRepositoryImp
 import com.example.chatapplication.databinding.FragmentAuthOtpVerificationBinding
-
+import com.example.chatapplication.ui.viewmodel.AuthViewModelFactory
+import com.example.chatapplication.utility.Navigation
+import com.google.firebase.auth.FirebaseAuth
 
 
 class AuthOtpVerificationFragment : Fragment(R.layout.fragment_auth_otp_verification) {
     private lateinit var binding: FragmentAuthOtpVerificationBinding
+    private lateinit var authViewModel: AuthViewModel
+    val phoneNo: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding = FragmentAuthOtpVerificationBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAuthOtpVerificationBinding.bind(view)
+        val authRepository = OtpRepositoryImp(FirebaseAuth.getInstance())
 
-        binding.etPhoneNo.setText(arguments?.getString("MobileNo"))
-//        binding.signUpBtn.setOnClickListener {
-//
-//
-//            val intent = Intent(context, MainActivity::class.java)
-//            // Clear the back stack
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            startActivity(intent)
-//
-//        }
-//        binding.icBack.setOnClickListener {
-//            navigation(R.id.signUpFragment, R.id.signFragment)
-//        }
-//        binding.haveSignIn.setOnClickListener {
-//            navigation(R.id.signUpFragment, R.id.signFragment)
-//        }
+        authViewModel = ViewModelProvider(this, AuthViewModelFactory(authRepository))[AuthViewModel::class.java]
+
+
+        val phoneNo = arguments?.getString("MobileNo")
+
+        if (phoneNo != null)
+            authViewModel.sentOtp(phoneNo, requireActivity(), false)
+
+
+        setTimerForResendBtn()
+
+
+        binding.sendOtp.setOnClickListener {
+            val otp = binding.etOtp.text.toString()
+            if (otp.isNotBlank()) {
+                authViewModel.verifyOtp(otp)
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                Toast.makeText(requireContext(), "Please enter otp", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        initObserver()
+
+        binding.resendBtn.setOnClickListener {
+            if (phoneNo != null)
+                authViewModel.sentOtp(phoneNo, requireActivity(), true)
+
+            setTimerForResendBtn()
+        }
+
     }
 
-    private fun navigation(from: Int, to: Int) {
-        val navController = findNavController()
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(
-                from,
-                true
-            ) // Replace with the actual ID of the current fragment
-            .build()
-        navController.navigate(to, null, navOptions)
+    private fun initObserver() {
+
+        authViewModel.codeSentStatus.observe(viewLifecycleOwner) { status ->
+            if (status.equals("CodeSent")) {
+                binding.sendOtp.isEnabled = true
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+
+        authViewModel.authStatus.observe(viewLifecycleOwner) { authStatus ->
+            if (authStatus.equals("SuccessfullyVerified")) {
+
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(requireContext(), "SuccessfullyVerifiedFragmetn", Toast.LENGTH_SHORT)
+                    .show()
+                binding.progressBar.visibility = View.GONE
+                val bundle = Bundle().apply {
+                    putString("MobileNo", phoneNo)
+                }
+
+                Navigation.navigate(
+                    this,
+                    R.id.AuthOtpVerificationFragment,
+                    R.id.userNameFragment,
+                    bundle
+                )
+
+            } else {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun setTimerForResendBtn() {
+        binding.progressBar.visibility = View.GONE
+        binding.resendBtn.isEnabled = false
+        object : CountDownTimer(30000, 1000) { // 30 seconds countdown with 1-second intervals
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsRemaining = (millisUntilFinished / 1000).toInt()
+                binding.resendBtn.text = "You Can Resend OTP after $secondsRemaining seconds"
+            }
+
+            override fun onFinish() {
+                binding.resendBtn.isEnabled = true // Re-enable the button
+                binding.resendBtn.text = "Click Here to Resend" // Reset the button text
+            }
+        }.start()
     }
 
 }

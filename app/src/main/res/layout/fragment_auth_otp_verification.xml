@@ -73,15 +73,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tvSingIn" />
 
         <EditText
-            android:id="@+id/etPhoneNo"
+            android:id="@+id/etOtp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/edit_text_background"
             android:fontFamily="@font/poppins"
             android:gravity="center_vertical"
-            android:inputType="phone"
             android:hint="*****"
+            android:inputType="phone"
             android:paddingHorizontal="20dp"
             android:paddingVertical="5dp"
             android:textColorHint="#D6CBCB"
@@ -97,12 +97,13 @@
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:text="@string/next"
+            android:enabled="false"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/etPhoneNo"
-            app:layout_constraintEnd_toEndOf="@+id/etPhoneNo"
-            app:layout_constraintTop_toBottomOf="@+id/etPhoneNo" />
+            app:layout_constraintStart_toStartOf="@+id/etOtp"
+            app:layout_constraintEnd_toEndOf="@+id/etOtp"
+            app:layout_constraintTop_toBottomOf="@+id/etOtp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -115,11 +116,12 @@
             android:layout_marginTop="20dp" />
 
         <TextView
+            android:id="@+id/resendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resend_otp"
-            android:textColor="#716161"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_marginBottom="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

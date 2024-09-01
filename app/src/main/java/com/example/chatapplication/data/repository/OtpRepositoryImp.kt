@@ -1,5 +1,7 @@
 package com.example.chatapplication.data.repository
 
+import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,13 +16,17 @@ class OtpRepositoryImp(private val auth: FirebaseAuth) : OTPAuthRepository {
 
     private val _authStatus = MutableLiveData<String>()
     override val authStatus: LiveData<String> get() = _authStatus
+    override val codeSentStatus: LiveData<String> get() = _codeSentStatus
+
 
     private val _verificationId = MutableLiveData<String>()
+    private val _codeSentStatus = MutableLiveData<String>()
+    private lateinit var  resendToken : PhoneAuthProvider.ForceResendingToken
     override val verificationId: LiveData<String> get() = _verificationId
 
-    override fun sendOtp(phoneNumber: String, activity: androidx.fragment.app.FragmentActivity) {
+    override fun sendOtp(phoneNumber: String, activity: FragmentActivity,resend:Boolean) {
 
-        val options = PhoneAuthOptions.newBuilder(auth)
+        val optionsBuilder  = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)
             .setTimeout(60L,TimeUnit.SECONDS)
             .setActivity(activity)
@@ -31,20 +37,28 @@ class OtpRepositoryImp(private val auth: FirebaseAuth) : OTPAuthRepository {
 
                 override fun onVerificationFailed(firebaseException: FirebaseException) {
 
-                    TODO("Not yet implemented")
+                    Toast.makeText(activity,"$firebaseException",Toast.LENGTH_SHORT).show()
+                    Log.wtf("OTP","$firebaseException")
                 }
 
                 override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
-                    _verificationId.value = verificationId
+                    _verificationId.postValue(verificationId)
+                    _codeSentStatus.postValue("CodeSent")
+                    resendToken =  token
 
                 }
             })
-            .build()
 
-            PhoneAuthProvider.verifyPhoneNumber(options)
+
+        if(resend && ::resendToken.isInitialized)  {
+            optionsBuilder.setForceResendingToken(resendToken)
+        }
+        val options = optionsBuilder.build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+0
+
 
     }
-
     override fun verifyOtp(otp: String) {
         _verificationId.value.let {
             if(it!=null){
@@ -54,11 +68,15 @@ class OtpRepositoryImp(private val auth: FirebaseAuth) : OTPAuthRepository {
         }
     }
 
+    //we can write final verification business logic here
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential){
         auth.signInWithCredential(credential)
             .addOnCompleteListener{task->
                 if(task.isSuccessful){
-                    _authStatus.postValue("Successfully verified")
+                Log.wtf("got","success")
+                    _authStatus.postValue("SuccessfullyVerified")
+                }else{
+                    Log.wtf("got1","failed")
                 }
             }
     }

@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.chatapplication.R
 import com.example.chatapplication.databinding.FragmentAuthSignInBinding
+import com.example.chatapplication.utility.Navigation
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
@@ -30,22 +31,14 @@ class AuthSignInFragment : Fragment(R.layout.fragment_auth_sign_in) {
         binding = FragmentAuthSignInBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.sendOtp.setOnClickListener {
 
-            val navController = findNavController()
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(
-                    R.id.AuthSignFragment,
-                    true
-                )
-                .build()
             val phoneNo = binding.etPhoneNo.text.toString()
             val bundle = Bundle().apply {
                 putString("MobileNo",phoneNo)
             }
-            navController.navigate(R.id.AuthOtpVerificationFragment, bundle, navOptions)
+            Navigation.navigate(this,R.id.AuthSignFragment,R.id.AuthOtpVerificationFragment,bundle)
+
         }
     }
 
