@@ -1,4 +1,4 @@
-package com.example.chatapplication.data.repository
+package com.example.chatapplication.data.repository.auth
 
 import android.util.Log
 import android.widget.Toast

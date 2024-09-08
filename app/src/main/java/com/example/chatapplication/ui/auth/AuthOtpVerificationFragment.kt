@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.example.chatapplication.R
-import com.example.chatapplication.data.repository.OtpRepositoryImp
+import com.example.chatapplication.data.repository.auth.OtpRepositoryImp
 import com.example.chatapplication.databinding.FragmentAuthOtpVerificationBinding
 import com.example.chatapplication.ui.viewmodel.AuthViewModelFactory
 import com.example.chatapplication.utility.Navigation
@@ -19,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 class AuthOtpVerificationFragment : Fragment(R.layout.fragment_auth_otp_verification) {
     private lateinit var binding: FragmentAuthOtpVerificationBinding
     private lateinit var authViewModel: AuthViewModel
-    val phoneNo: String? = null
+    private var phoneNo : String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +32,13 @@ class AuthOtpVerificationFragment : Fragment(R.layout.fragment_auth_otp_verifica
         authViewModel = ViewModelProvider(this, AuthViewModelFactory(authRepository))[AuthViewModel::class.java]
 
 
-        val phoneNo = arguments?.getString("MobileNo")
+        phoneNo = arguments?.getString("MobileNo")
 
-        if (phoneNo != null)
-            authViewModel.sentOtp(phoneNo, requireActivity(), false)
-
+         phoneNo?.let {
+             authViewModel.sentOtp(it, requireActivity(), false)
+         }
 
         setTimerForResendBtn()
-
 
         binding.sendOtp.setOnClickListener {
             val otp = binding.etOtp.text.toString()
@@ -56,16 +53,15 @@ class AuthOtpVerificationFragment : Fragment(R.layout.fragment_auth_otp_verifica
         initObserver()
 
         binding.resendBtn.setOnClickListener {
-            if (phoneNo != null)
-                authViewModel.sentOtp(phoneNo, requireActivity(), true)
+            phoneNo?.let {
+                authViewModel.sentOtp(it, requireActivity(), false)
+            }
 
             setTimerForResendBtn()
         }
-
     }
 
     private fun initObserver() {
-
         authViewModel.codeSentStatus.observe(viewLifecycleOwner) { status ->
             if (status.equals("CodeSent")) {
                 binding.sendOtp.isEnabled = true

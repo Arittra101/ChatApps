@@ -2,8 +2,7 @@ package com.example.chatapplication.ui.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.chatapplication.data.repository.OTPAuthRepository
-import com.example.chatapplication.data.repository.OtpRepositoryImp
+import com.example.chatapplication.data.repository.auth.OTPAuthRepository
 
 class AuthViewModel(private val authreop: OTPAuthRepository) :ViewModel() {
     val authStatus: LiveData<String> = authreop.authStatus
