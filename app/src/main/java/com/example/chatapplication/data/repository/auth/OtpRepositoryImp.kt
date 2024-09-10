@@ -38,6 +38,7 @@ class OtpRepositoryImp(private val auth: FirebaseAuth) : OTPAuthRepository {
                 override fun onVerificationFailed(firebaseException: FirebaseException) {
 
                     Toast.makeText(activity,"$firebaseException",Toast.LENGTH_SHORT).show()
+                    _authStatus.postValue("firebaseException")
                     Log.wtf("OTP","$firebaseException")
                 }
 
@@ -76,6 +77,7 @@ class OtpRepositoryImp(private val auth: FirebaseAuth) : OTPAuthRepository {
                 Log.wtf("got","success")
                     _authStatus.postValue("SuccessfullyVerified")
                 }else{
+                    _authStatus.postValue("Failed")
                     Log.wtf("got1","failed")
                 }
             }

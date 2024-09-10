@@ -87,7 +87,15 @@ class AuthOtpVerificationFragment : Fragment(R.layout.fragment_auth_otp_verifica
                     bundle
                 )
 
-            } else {
+            }else if(authStatus.equals("firebaseException")){
+
+                Navigation.navigate(
+                    this,
+                    R.id.AuthOtpVerificationFragment,
+                    R.id.AuthSignFragment
+                )
+            }
+            else {
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
             }

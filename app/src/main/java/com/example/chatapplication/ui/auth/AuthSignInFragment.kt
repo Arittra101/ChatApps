@@ -3,19 +3,11 @@ package com.example.chatapplication.ui.auth
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.NavOptions
-import com.google.firebase.auth.FirebaseAuth
-import android.util.Log
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.example.chatapplication.R
 import com.example.chatapplication.databinding.FragmentAuthSignInBinding
 import com.example.chatapplication.utility.Navigation
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import java.util.concurrent.TimeUnit
 
 
 class AuthSignInFragment : Fragment(R.layout.fragment_auth_sign_in) {
@@ -34,12 +26,32 @@ class AuthSignInFragment : Fragment(R.layout.fragment_auth_sign_in) {
         binding.sendOtp.setOnClickListener {
 
             val phoneNo = binding.etPhoneNo.text.toString()
-            val bundle = Bundle().apply {
-                putString("MobileNo",phoneNo)
+            val formattedPhoneNo =  formatPhoneNumber(phoneNo)
+
+            if (formattedPhoneNo.startsWith("+")) {
+                val bundle = Bundle().apply {
+                    putString("MobileNo", formattedPhoneNo)
+                }
+                Navigation.navigate(
+                    this,
+                    R.id.AuthSignFragment,
+                    R.id.AuthOtpVerificationFragment,
+                    bundle
+                )
+            }else{
+                Toast.makeText(requireContext(), "Invalid Phone Number", Toast.LENGTH_SHORT).show()
             }
-            Navigation.navigate(this,R.id.AuthSignFragment,R.id.AuthOtpVerificationFragment,bundle)
 
         }
+    }
+    private fun formatPhoneNumber(phoneNo: String):String {
+
+        return if(phoneNo.startsWith("+") || phoneNo.startsWith("+880")){
+            phoneNo
+        }else  {
+            "+880"+phoneNo.substring(1)
+        }
+
     }
 
 }
