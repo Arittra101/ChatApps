@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.chatapplication.R
@@ -44,7 +45,7 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
         initialize()
 
         binding.sendOtp.setOnClickListener {
-            initialize()
+            isUserNameAvailable(currentUserDetails)
         }
     }
 
@@ -58,6 +59,7 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
         userNameViewModel.currentUserId.observe(viewLifecycleOwner) {
             currentUserId = it
             Log.wtf("Hellonop", it.toString())
+            setInProgress(true)
             userNameViewModel.getCurrentUserDocumentReference(it)
         }
 
@@ -70,11 +72,24 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
         userNameViewModel.currentUserDetails.observe(viewLifecycleOwner) {
             currentUserDetails = it
             Log.wtf("currentDetailsOmg", currentUserDetails.toString())
-            isUserNameAvailable(currentUserDetails)
+
+            currentUserDetails?.userName.let {userName->
+                binding.userName.setText(userName)
+            }
+            setInProgress(false)
+            binding.sendOtp.isEnabled = true
+
+        }
+        userNameViewModel.isSetUserInfoToDB.observe(viewLifecycleOwner) {
+            setInProgress(false)
+            binding.sendOtp.isEnabled = true
+            Toast.makeText(requireContext(), "UserName Set Successfully ", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun isUserNameAvailable(userInfo: UserInfo?) {
+        setInProgress(true)
+        binding.sendOtp.isEnabled = false
         val newUserName = binding.userName.text.toString()
         if (userInfo != null) {
             userNameViewModel.setCurrentUserDetails(currentDocumentRef, userInfo, newUserName, null)

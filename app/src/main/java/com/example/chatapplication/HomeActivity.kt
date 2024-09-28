@@ -28,8 +28,8 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        val data = mutableMapOf<String, String>()
-        FirebaseFirestore.getInstance().collection("test").add(data)
+    /*    val data = mutableMapOf<String, String>()
+        FirebaseFirestore.getInstance().collection("test").add(data)*/
 
 //        val l = 1
 //        // Setup navigation

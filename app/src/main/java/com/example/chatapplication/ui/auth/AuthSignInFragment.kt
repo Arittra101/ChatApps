@@ -12,8 +12,7 @@ import com.example.chatapplication.utility.Navigation
 
 class AuthSignInFragment : Fragment(R.layout.fragment_auth_sign_in) {
     private lateinit var binding: FragmentAuthSignInBinding
-    private lateinit var auth: FirebaseAuth
-    private var verificationId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

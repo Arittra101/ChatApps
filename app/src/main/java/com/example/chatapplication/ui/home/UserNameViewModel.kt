@@ -12,6 +12,7 @@ class UserNameViewModel(private val userInfoRep: UserInfoRepository) : ViewModel
     val currentUserDocumentReference: LiveData<DocumentReference> =
         userInfoRep.currentUserDocumentReference
     val currentUserDetails: LiveData<UserInfo?> = userInfoRep.currentUserDetails
+    val isSetUserInfoToDB: LiveData<Boolean> = userInfoRep.isSetUserInfoToDB
 
 
     fun getCurrentUserId() {

@@ -44,14 +44,14 @@ class UserInfoRepositoryImp() : UserInfoRepository {
                             ?: Timestamp.now()
                     )
                     _currentUserDetails.postValue(userInfo)
-                    // You can use userInfo here, for example, update LiveData or UI
+
                 } else {
-                    // Handle case where document doesn't exist
+
                     _currentUserDetails.postValue(null)
                     Log.d("getCurrentUserName", "User document does not exist")
                 }
             } else {
-                // Handle error
+
                 Log.e("getCurrentUserName", "Error getting user document", task.exception)
             }
         }
@@ -70,9 +70,9 @@ class UserInfoRepositoryImp() : UserInfoRepository {
         newUserInfo: UserInfo?
     ) {
         val dbUserInfo = when {
-            userInfo != null && name != null -> userInfo.apply { userName = name }
+            newUserInfo==null && userInfo != null && name != null -> userInfo.apply { userName = name }
             newUserInfo != null -> newUserInfo
-            else -> UserInfo("", "", Timestamp.now()) // Default value
+            else -> UserInfo("", "", Timestamp.now())
         }
 
         userDocumentReference.set(dbUserInfo).addOnCompleteListener { task ->
