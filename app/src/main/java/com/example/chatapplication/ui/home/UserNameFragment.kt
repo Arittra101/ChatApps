@@ -23,6 +23,7 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
     lateinit private var currentDocumentRef: DocumentReference
     lateinit private var phoneNo: String
     lateinit private var currentUserId: String
+
     private var currentUserDetails: UserInfo? = null
 
     private lateinit var userNameViewModel: UserNameViewModel
