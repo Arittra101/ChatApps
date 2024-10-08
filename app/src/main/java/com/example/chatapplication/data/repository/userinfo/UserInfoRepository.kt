@@ -9,8 +9,10 @@ interface UserInfoRepository {
     val currentUserDocumentReference: LiveData<DocumentReference>
     val currentUserDetails: LiveData<UserInfo?>
     val isSetUserInfoToDB : LiveData<Boolean>
+    val isUserLogIn : LiveData<Boolean>
 
     fun getCurrentUserId()
+    fun checkUserLogIn()
     fun getCurrentDetails(userDocumentReference: DocumentReference)
     fun getCurrentUserDocumentReference(currentUserId: String)
 

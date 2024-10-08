@@ -10,6 +10,7 @@ import com.example.chatapplication.R
 import com.example.chatapplication.data.repository.auth.OtpRepositoryImp
 import com.example.chatapplication.databinding.FragmentAuthOtpVerificationBinding
 import com.example.chatapplication.ui.viewmodel.AuthViewModelFactory
+import com.example.chatapplication.utility.AuthManager
 import com.example.chatapplication.utility.Navigation
 import com.google.firebase.auth.FirebaseAuth
 
@@ -72,6 +73,7 @@ class AuthOtpVerificationFragment : Fragment(R.layout.fragment_auth_otp_verifica
         authViewModel.authStatus.observe(viewLifecycleOwner) { authStatus ->
             if (authStatus.equals("SuccessfullyVerified")) {
 
+                context?.let { AuthManager.setLoggedIn(it,true) }
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(requireContext(), "SuccessfullyVerifiedFragmetn", Toast.LENGTH_SHORT)
                     .show()

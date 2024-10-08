@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapplication.data.model.UserInfo
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 
 class UserInfoRepositoryImp() : UserInfoRepository {
 
@@ -24,10 +25,19 @@ class UserInfoRepositoryImp() : UserInfoRepository {
     private val _isSetUserInfoToDB = MutableLiveData<Boolean>()
     override val isSetUserInfoToDB : LiveData<Boolean> get() = _isSetUserInfoToDB
 
+    private val _isUserLogIn = MutableLiveData<Boolean>()
+    override val isUserLogIn : LiveData<Boolean> get() = _isUserLogIn
+
+
 
 
     override fun getCurrentUserId() {
         _currentUserId.postValue(FirebaseAuth.getInstance().uid.toString())
+    }
+    override fun checkUserLogIn() {
+        if (Firebase.auth.currentUser != null) {
+            _isUserLogIn.postValue(true)
+        } else _isUserLogIn.postValue(false)
     }
 
     override fun getCurrentDetails(userDocumentReference: DocumentReference) {

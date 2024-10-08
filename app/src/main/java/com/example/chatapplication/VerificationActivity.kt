@@ -4,17 +4,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.NavInflater
 import androidx.navigation.fragment.NavHostFragment
-import com.example.chatapplication.R
+
 import com.example.chatapplication.databinding.ActivityHomeActivityBinding
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.chatapplication.utility.AuthManager
+import com.example.chatapplication.utility.Navigation
 
 
-class HomeActivity : AppCompatActivity() {
+class VerificationActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,24 +28,10 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-    /*    val data = mutableMapOf<String, String>()
-        FirebaseFirestore.getInstance().collection("test").add(data)*/
 
-//        val l = 1
-//        // Setup navigation
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-//        val navController: NavController = navHostFragment.navController
-//        val navInflater: NavInflater = navController.navInflater
-//        val navGraph: NavGraph = navInflater.inflate(R.navigation.nav_graph)
-//
-//        if (l==1) {
-//            navGraph.setStartDestination(R.id.signFragment)
-//        }
-//
-//        navController.graph = navGraph
-
-
-
+        if(AuthManager.isLoggedIn(this)){
+            Navigation.setupNavGraph(this,R.id.fragmentContainerView,R.id.userNameFragment)
+        }
     }
 
 }

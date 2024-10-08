@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.startButton.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, VerificationActivity::class.java)
             startActivity(intent)
             finish()
         }

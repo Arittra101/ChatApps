@@ -1,4 +1,4 @@
-package com.example.chatapplication.ui.home
+package com.example.chatapplication.ui.username
 
 import android.os.Bundle
 import android.util.Log
@@ -13,11 +13,10 @@ import com.example.chatapplication.data.repository.userinfo.UserInfoRepositoryIm
 import com.example.chatapplication.databinding.FragmentUserNameBinding
 import com.example.chatapplication.ui.viewmodel.UserNameViewModelFactory
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 
 
-class UserNameFragment : Fragment(R.layout.fragment_user_name) {
+class UserNameSetUpFragment : Fragment(R.layout.fragment_user_name) {
 
     private lateinit var binding: FragmentUserNameBinding
     lateinit private var currentDocumentRef: DocumentReference
@@ -26,7 +25,7 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
 
     private var currentUserDetails: UserInfo? = null
 
-    private lateinit var userNameViewModel: UserNameViewModel
+    private lateinit var userNameViewModel: UserNameSetUpViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,7 +40,7 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
         val userInfoRep = UserInfoRepositoryImp()
         userNameViewModel = ViewModelProvider(
             this,
-            UserNameViewModelFactory(userInfoRep))[UserNameViewModel::class.java]
+            UserNameViewModelFactory(userInfoRep))[UserNameSetUpViewModel::class.java]
 
         initialize()
 
@@ -99,10 +98,6 @@ class UserNameFragment : Fragment(R.layout.fragment_user_name) {
             userNameViewModel.setCurrentUserDetails(currentDocumentRef, null, null, newUserInfo)
 
         }
-    }
-
-    private fun getUserName() {
-        setInProgress(true)
     }
 
     private fun setInProgress(isProgressBar: Boolean) {

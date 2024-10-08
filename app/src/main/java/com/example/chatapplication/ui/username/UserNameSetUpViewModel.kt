@@ -1,4 +1,4 @@
-package com.example.chatapplication.ui.home
+package com.example.chatapplication.ui.username
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.example.chatapplication.data.model.UserInfo
 import com.example.chatapplication.data.repository.userinfo.UserInfoRepository
 import com.google.firebase.firestore.DocumentReference
 
-class UserNameViewModel(private val userInfoRep: UserInfoRepository) : ViewModel() {
+class UserNameSetUpViewModel(private val userInfoRep: UserInfoRepository) : ViewModel() {
     val currentUserId: LiveData<String> = userInfoRep.currentUserId
     val currentUserDocumentReference: LiveData<DocumentReference> =
         userInfoRep.currentUserDocumentReference
@@ -18,6 +18,8 @@ class UserNameViewModel(private val userInfoRep: UserInfoRepository) : ViewModel
     fun getCurrentUserId() {
         userInfoRep.getCurrentUserId()
     }
+
+
 
     fun getCurrentUserDocumentReference(userId: String) {
         userInfoRep.getCurrentUserDocumentReference(userId)

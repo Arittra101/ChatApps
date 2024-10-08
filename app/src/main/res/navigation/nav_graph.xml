@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_auth_otp_verification" />
     <fragment
         android:id="@+id/userNameFragment"
-        android:name="com.example.chatapplication.ui.home.UserNameFragment"
+        android:name="com.example.chatapplication.ui.username.UserNameSetUpFragment"
         android:label="fragment_user_name"
         tools:layout="@layout/fragment_user_name" />
 </navigation>
