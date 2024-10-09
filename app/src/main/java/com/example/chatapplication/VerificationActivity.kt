@@ -1,17 +1,14 @@
 package com.example.chatapplication
+
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
-import androidx.navigation.NavInflater
-import androidx.navigation.fragment.NavHostFragment
-
 import com.example.chatapplication.databinding.ActivityHomeActivityBinding
+import com.example.chatapplication.ui.navigation.Navigation
 import com.example.chatapplication.utility.AuthManager
-import com.example.chatapplication.utility.Navigation
 
 
 class VerificationActivity : AppCompatActivity() {
@@ -30,8 +27,14 @@ class VerificationActivity : AppCompatActivity() {
 
 
         if(AuthManager.isLoggedIn(this)){
-            Navigation.setupNavGraph(this,R.id.fragmentContainerView,R.id.userNameFragment)
+            val intent: Intent = Intent(
+                this@VerificationActivity,
+                SocialActivity::class.java
+            )
+            finish()
+            startActivity(intent)
         }
+
     }
 
 }

@@ -11,7 +11,7 @@ import com.example.chatapplication.R
 import com.example.chatapplication.data.model.UserInfo
 import com.example.chatapplication.data.repository.userinfo.UserInfoRepositoryImp
 import com.example.chatapplication.databinding.FragmentUserNameBinding
-import com.example.chatapplication.ui.viewmodel.UserNameViewModelFactory
+import com.example.chatapplication.ui.viewmodelfactory.UserNameViewModelFactory
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 

@@ -1,4 +1,4 @@
-package com.example.chatapplication.utility
+package com.example.chatapplication.ui.navigation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

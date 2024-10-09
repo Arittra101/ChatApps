@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.example.chatapplication.R
 import com.example.chatapplication.databinding.FragmentAuthSignInBinding
-import com.example.chatapplication.utility.Navigation
+import com.example.chatapplication.ui.navigation.Navigation
 
 
 class AuthSignInFragment : Fragment(R.layout.fragment_auth_sign_in) {

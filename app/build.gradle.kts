@@ -56,17 +56,24 @@ dependencies {
     val nav_version = "2.6.0"
 
     // Kotlin
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation(libs.androidx.navigation.fragment.ktx.v260)
+    implementation(libs.androidx.navigation.ui.ktx.v260)
 
 
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation(platform(libs.firebase.bom))
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-auth")
+    implementation(libs.firebase.auth)
 
     //ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+
+
+    //viewpager and tabLayout
+    implementation(libs.androidx.viewpager2)
+    implementation (libs.material.v190)
+
 }

@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.chatapplication.R
 import com.example.chatapplication.data.repository.auth.OtpRepositoryImp
 import com.example.chatapplication.databinding.FragmentAuthOtpVerificationBinding
-import com.example.chatapplication.ui.viewmodel.AuthViewModelFactory
+import com.example.chatapplication.ui.viewmodelfactory.AuthViewModelFactory
 import com.example.chatapplication.utility.AuthManager
-import com.example.chatapplication.utility.Navigation
+import com.example.chatapplication.ui.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 
 

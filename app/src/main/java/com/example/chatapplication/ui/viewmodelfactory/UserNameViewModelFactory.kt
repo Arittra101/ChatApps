@@ -1,4 +1,4 @@
-package com.example.chatapplication.ui.viewmodel
+package com.example.chatapplication.ui.viewmodelfactory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
