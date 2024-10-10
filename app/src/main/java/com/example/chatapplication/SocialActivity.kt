@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.chatapplication.databinding.ActivityMainBinding
 import com.example.chatapplication.databinding.ActivitySocialBinding
 import com.example.chatapplication.ui.adapter.tabLayout.ViewPagerAdapter
+import com.example.chatapplication.ui.navigation.socialNavigationList
 import com.google.android.material.tabs.TabLayoutMediator
 
 class SocialActivity : AppCompatActivity() {
@@ -28,19 +29,15 @@ class SocialActivity : AppCompatActivity() {
         }
         pagerAdapter = ViewPagerAdapter(this)
         pagerAdapter?.apply {
-            addIdentifiers(
-                listOf(
-                    "CHAT",
-                    "SETTINGS",
-                    "FEED"
-                )
-            )
+            addIdentifiers(socialNavigationList)
         }
+        binding.viewPager.adapter = pagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
            tab.text = when (position) {
-                0 -> "Tab One"
-                1 -> "Tab Two"
-                else -> "Tab One"
+               0 -> "CHAT"
+               1 -> "SETTINGS"
+               3 -> "FEED"
+               else -> "Unknown"
             }
         }.attach()
 
