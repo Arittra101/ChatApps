@@ -4,4 +4,10 @@
     <color name="text_color">#34A751</color>
     <color name="white">#FFFFFFFF</color>
     <color name="editText">#FAFAFA</color>
+
+    <color name="selectedColor">#FF6200EE</color> <!-- Selected state color -->
+    <color name="unselectedColor">#FF3700B3</color> <!-- Unselected state color -->
+    <color name="button">#FF6200EE</color> <!-- Background color for button -->
+    <color name="background_color">#F0F0F0</color> <!-- Background color for tab layout -->
 </resources>
+

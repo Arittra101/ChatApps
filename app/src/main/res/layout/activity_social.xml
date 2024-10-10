@@ -19,6 +19,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
+        style="@style/RoundedTabLayoutStyle"
+        app:tabBackground="@drawable/tab_item_layout_bg"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
